@@ -1,0 +1,37 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.createMain{
+    display: flex;
+    padding: 10px 20px;
+    // height: 100%;
+    overflow-y: auto;
+    flex: 1;
+    .fromData{
+        flex: 1;
+        padding-right: 10px;
+    }
+    .view{
+        flex: 1;
+        padding-left: 10px;
+    }
+    .ant-form-item-label > label{
+        width: 85px;
+        display: flex;
+        justify-content: flex-end;
+    }
+    .ant-form-item{
+        margin-bottom: 10px;
+    }
+}
+.listConten{
+    height: calc(100% - 52px);
+    overflow-y: auto;
+}
+.submitBtn{
+    padding: 10px 20px;
+    padding-bottom: 0;
+    height: 42px;
+}
