@@ -1,11 +1,12 @@
 // 文章列表
 
-import React, { PureComponent, useState, useEffect } from 'react'
+import React, { PureComponent, useState, useEffect, forwardRef, useRef } from 'react'
 import { Form, Input, Button, Table, Modal, Space, message, DatePicker } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import moment from 'moment'
 import './css/index.less'
 import { QUERYLIST, delResume } from '@/api/article'
+import { getTableScroll } from '@/asset/js/util'
 import ViewModel from './viewModel'
 
 const { Column } = Table;
@@ -14,18 +15,18 @@ const { confirm } = Modal;
 
 function Article(props) {
     const [form] = Form.useForm();
-    const [formLayout, setFormLayout] = useState({ caluea: 666, avlud: '呵呵' });
     const [visible, setVisible] = useState(false);
     const [list, setList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [content, setContent] = useState({});
+    const [scrollY, setScrollY] = useState("")
 
-    
+    // const TableRef = useRef(null)
 
     useEffect(() => {
         // form.setFieldsValue()
         //获取简历列表
-   
+        setScrollY(getTableScroll())
         getList()
     }, [])
 
@@ -132,6 +133,7 @@ function Article(props) {
             title: '操作',
             dataIndex: 'option',
             key: 'option',
+            width: 250,
             render: (text, parms) => {
                 return (
                     <Space size="middle">
@@ -169,7 +171,7 @@ function Article(props) {
                 </Form>
             </div>
             <div className="list">
-                <Table dataSource={list} columns={columns} bordered loading={loading} rowKey={record=>record.id}  />
+                <Table dataSource={list} columns={columns} bordered loading={loading} rowKey={record=>record.id} scroll={{y:scrollY}}  />
             </div>
             <ViewModel visible={visible} onCancel={onCancel} content={content}/>
         </div>

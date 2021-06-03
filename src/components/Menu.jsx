@@ -59,13 +59,12 @@ function HomeMenu(props) {
         },
     ]
 
-
     const getMenuNodes = (MenuList) => {
         return MenuList.map(item => {
             if (!item.children) {
                 return (
-                    <Menu.Item title={item.name} key={item.path} path={item.path} icon={item.icon}>
-                        <Link to={item.path}>
+                    <Menu.Item  key={item.path} {...item}>
+                        <Link to={item.path} >
                             <span>{item.name}</span>
                         </Link>
                     </Menu.Item>
@@ -75,11 +74,8 @@ function HomeMenu(props) {
                     <SubMenu
                         key={item.path}
                         icon={item.icon}
-                        title={
-                            <span>
-                                <span>{item.name}</span>
-                            </span>
-                        }>
+                        children={item.children}
+                        title={item.name}>
                         {getMenuNodes(item.children)}
                     </SubMenu>
                 )
@@ -88,17 +84,19 @@ function HomeMenu(props) {
     }
 
     const getMenu = (items) => {
-        const { props:{ title, path, parentMenu } } = items.item
+        const { props:{ name, path, parentMenu } } = items.item
         let openKeys = JSON.parse(JSON.stringify(items.keyPath))
         localStorage.setItem('openKeys', JSON.stringify(openKeys.splice(1)))
+        // console.log(items, 888)
         props.addNav({
-            title,
+            name,
             path,
-            parent: parentMenu.subMenuTitle?{title: parentMenu.subMenuTitle.innerText, path:''}:null
+            parent: parentMenu?{title: parentMenu.subMenuTitle.innerText, path:''}:null
         })
     }
+
     return (
-        <Menu theme="dark" mode="inline" key="home" onClick={getMenu} selectedKeys={props.location.pathname} defaultOpenKeys={openKey} >
+        <Menu theme="dark" mode="inline" key="home"  onClick={getMenu} selectedKeys={props.location.pathname} defaultOpenKeys={openKey} >
             {getMenuNodes(menuList)}
         </Menu>
     )

@@ -1,4 +1,4 @@
-import React, { Component,Suspense  } from 'react'
+import React, { Component, Suspense, PureComponent  } from 'react'
 import { Layout, Breadcrumb   } from 'antd';
 import {Switch,Route, Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -16,7 +16,7 @@ const Avatar = React.lazy(()=> import('@/components/Avatar'))
 
 
 const { Header, Sider, Content } = Layout;
-class Home extends Component {
+class Home extends PureComponent {
     constructor(props){
         super(props)
         this.state = {
@@ -63,7 +63,7 @@ class Home extends Component {
                   </Breadcrumb.Item>
                     { this.props.breadList.map(item=>(
                       <Breadcrumb.Item key={ item.path }>
-                        {item.path? <Link to={ item.path }>{ item.title }</Link>:<span>{item.title}</span>}
+                        {item.path? <Link to={ item.path }>{ item.name }</Link>:<span>{item.name}</span>}
                       </Breadcrumb.Item>
                     )) }
 								</Breadcrumb>

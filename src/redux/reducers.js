@@ -20,11 +20,11 @@ const initState = {
             }
         case 'ADD_NAV':
             let menu = []
-            const { title, path, parent } = action.data
+            const { name, path, parent } = action.data
             if(parent){
                 menu.push(parent)
             }
-            menu.push({ title, path })
+            menu.push({ name, path })
             localStorage.setItem('menu', JSON.stringify(menu))
             return {
                 ...state,

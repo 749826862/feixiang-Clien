@@ -9,6 +9,7 @@ export default class viewModel extends Component {
 
     render() {
         let { visible, content } = this.props
+        console.log(content, 888)
         return (
             <Modal
                 title="文章预览"
