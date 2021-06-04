@@ -1,7 +1,7 @@
 // 文章列表
 
 import React, { PureComponent, useState, useEffect, forwardRef, useRef } from 'react'
-import { Form, Input, Button, Table, Modal, Space, message, DatePicker } from 'antd';
+import { Form, Input, Button, Table, Modal, Space, message, DatePicker, Select } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import moment from 'moment'
 import './css/index.less'
@@ -11,6 +11,7 @@ import ViewModel from './viewModel'
 
 const { Column } = Table;
 const { confirm } = Modal;
+const { Option } = Select;
 
 
 function Article(props) {
@@ -26,14 +27,15 @@ function Article(props) {
     useEffect(() => {
         // form.setFieldsValue()
         //获取简历列表
-        setScrollY(getTableScroll())
         getList()
+        
     }, [])
 
     const getList =async () => {
         const result = await QUERYLIST()
         if(result.code === 200) {
             setList(result.data)
+            setScrollY(getTableScroll())
         }
         setLoading(false)
     }
@@ -158,6 +160,14 @@ function Article(props) {
                 >
                     <Form.Item label="文章标题" name="title">
                         <Input placeholder="请输入查询关键字" />
+                    </Form.Item>
+                    <Form.Item label="审批状态" name="approval">
+                        <Select defaultValue="" style={{ width: 120 }}>
+                            <Option value="">全部</Option>
+                            <Option value="0">待审批</Option>
+                            <Option value="1">审批通过</Option>
+                            <Option value="2">审批失败</Option>
+                        </Select>
                     </Form.Item>
                     <Form.Item label="创建日期" name="createData">
                         <DatePicker placeholder="请选择查询日期" />

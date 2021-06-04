@@ -54,10 +54,19 @@ export const clearAllCookie = () => {
 	let tHeaderBottom = 0
 	if (tHeader) {
 	  tHeaderBottom = tHeader.getBoundingClientRect().bottom
+	//   console.log(tHeader.getBoundingClientRect(), 888)
+	}
+
+	// 判断是否显示滚动条 ant-table-body
+	let tablebody = document.getElementsByClassName("ant-table-body")[0]
+
+	let height = null
+	if(tablebody.scrollHeight !== tablebody.offsetHeight){
+		height = `calc(100vh - ${tHeaderBottom + extraHeight}px)`
 	}
 	//窗体高度-表格内容顶部的高度-表格内容底部的高度
 	// let height = document.body.clientHeight - tHeaderBottom - extraHeight
-	let height = `calc(100vh - ${tHeaderBottom + extraHeight}px)`
+	// let height = `calc(100vh - ${tHeaderBottom + extraHeight}px)`
 	return height
   }
 
